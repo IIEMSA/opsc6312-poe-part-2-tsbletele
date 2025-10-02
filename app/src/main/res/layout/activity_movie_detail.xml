@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_blue_bg"
+    android:padding="16dp">
+
+    <!-- Search Bar with Logo -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/search_background"
+        android:padding="4dp"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="16dp">
+
+        <ImageView
+            android:id="@+id/appLogo"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/cineflix_logo"
+            android:contentDescription="CineFlix Logo"
+            android:layout_marginEnd="8dp"
+            android:scaleType="centerCrop"
+            android:background="@drawable/circle_logo_bg"
+            android:clipToOutline="true" />
+
+        <EditText
+            android:id="@+id/searchBar"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:hint="Search movies or series..."
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:background="@android:color/transparent"
+            android:imeOptions="actionSearch"
+            android:singleLine="true"
+            android:gravity="center_vertical" />
+
+        <ImageButton
+            android:id="@+id/voiceButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_mic"
+            android:background="@drawable/circle_button"
+            android:contentDescription="Voice Search" />
+    </LinearLayout>
+
+    <!-- AppBar: Back + Share Buttons -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp">
+
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/circle_button"
+            android:contentDescription="Back"
+            app:srcCompat="@drawable/ic_back"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/shareButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/circle_button"
+            android:contentDescription="Share"
+            app:srcCompat="@drawable/ic_share"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Poster + Title + Rating + Genres -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:gravity="center_vertical"
+        android:gap="16dp">
+
+        <ImageView
+            android:id="@+id/posterImage"
+            android:layout_width="150dp"
+            android:layout_height="225dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/spiderverse_poster"
+            android:contentDescription="Movie Poster"
+            android:background="@drawable/rounded_corners"
+            android:clipToOutline="true" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/movieTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Spider-Man: Across the Spider-Verse"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
+            <!-- Rating Stars (for display only) -->
+            <LinearLayout
+                android:id="@+id/ratingStars"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="8dp">
+                <ImageButton
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    app:srcCompat="@drawable/star_filled"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Star 1" />
+                <ImageButton
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    app:srcCompat="@drawable/star_filled"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Star 2" />
+                <ImageButton
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    app:srcCompat="@drawable/star_filled"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Star 3" />
+                <ImageButton
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    app:srcCompat="@drawable/star_filled"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Star 4" />
+                <ImageButton
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    app:srcCompat="@drawable/star_outline"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Star 5" />
+            </LinearLayout>
+
+            <!-- Genre Chips -->
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/genreChips"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:singleLine="true"
+                app:chipSpacing="8dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Overview Scroll -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingBottom="16dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/movieOverview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="After reuniting with Gwen Stacy, Brooklyn's full-time, friendly neighborhood Spider-Man is catapulted across the Multiverse, where he encounters a team of Spider-People charged with protecting its very existence. However, when the heroes clash on how to handle a new threat, Miles finds himself pitted against the other Spiders. He must soon redefine what it means to be a hero so he can save the people he loves most."
+                android:textSize="14sp"
+                android:lineSpacingExtra="2dp"
+                android:layout_marginBottom="16dp" />
+
+            <!-- User Star Rating (interactive) -->
+            <LinearLayout
+                android:id="@+id/userRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="24dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp">
+
+                <ImageButton
+                    android:id="@+id/star1"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:srcCompat="@drawable/star_outline"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Star 1" />
+
+                <ImageButton
+                    android:id="@+id/star2"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:srcCompat="@drawable/star_outline"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Star 2" />
+
+                <ImageButton
+                    android:id="@+id/star3"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:srcCompat="@drawable/star_outline"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Star 3" />
+
+                <ImageButton
+                    android:id="@+id/star4"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:srcCompat="@drawable/star_outline"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Star 4" />
+
+                <ImageButton
+                    android:id="@+id/star5"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:srcCompat="@drawable/star_outline"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Star 5" />
+            </LinearLayout>
+
+            <!-- More Like This -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="More Like This"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerMoreLikeThis"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:overScrollMode="never" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

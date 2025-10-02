@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/rounded_corners"
+    android:padding="8dp"
+    android:layout_margin="8dp"
+    android:elevation="4dp">
+
+    <!-- Movie Poster -->
+    <ImageView
+        android:id="@+id/moviePoster"
+        android:layout_width="150dp"
+        android:layout_height="225dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/yellowjackets"
+        android:contentDescription="Movie Poster"
+        android:clipToOutline="true"
+        android:background="@drawable/rounded_corners"/>
+
+    <!-- Movie Title -->
+    <TextView
+        android:id="@+id/movieTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="YellowJackets"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:maxLines="2"/>
+
+    <!-- Rating -->
+    <LinearLayout
+        android:id="@+id/movieRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="4dp">
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/star_filled"
+            android:contentDescription="Star" />
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/star_filled"
+            android:contentDescription="Star" />
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/star_filled"
+            android:contentDescription="Star" />
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/star_filled"
+            android:contentDescription="Star" />
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/star_outline"
+            android:contentDescription="Star" />
+    </LinearLayout>
+</LinearLayout>
