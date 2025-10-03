@@ -86,7 +86,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:gravity="center_vertical"
-        android:gap="16dp">
+        android:paddingEnd="16dp">
 
         <ImageView
             android:id="@+id/posterImage"
