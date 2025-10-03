@@ -62,6 +62,7 @@ dependencies {
 
     // Database
     implementation(libs.room.runtime)
+    implementation(libs.androidx.ui)
     kapt(libs.room.compiler)
     implementation(libs.room.ktx)
 

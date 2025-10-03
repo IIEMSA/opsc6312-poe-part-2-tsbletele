@@ -1,7 +1,5 @@
 package com.example.cineflix.model
 
-data class MovieResponse(
+data class SimilarMoviesResponse(
     val results: List<Movie>
 )
-
-

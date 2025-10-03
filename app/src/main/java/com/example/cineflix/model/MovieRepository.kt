@@ -34,4 +34,11 @@ class MovieRepository {
         query = query,
         page = page
     )
+
+    suspend fun getMovieDetails(movieId: Int, apiKey: String) =
+        api.getMovieDetails(movieId, apiKey)
+
+    suspend fun getSimilarMovies(movieId: Int, apiKey: String) =
+        api.getSimilarMovies(movieId, apiKey)
+
 }
