@@ -1,4 +1,4 @@
-package com.example.cineflix
+package com.example.cineflix.ui
 
 import android.os.Bundle
 import android.view.View
@@ -10,9 +10,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.cineflix.R
 import com.example.cineflix.adapters.MovieAdapter
 import com.example.cineflix.data.network.RetrofitClient
-import com.example.cineflix.model.MovieRepository
+import com.example.cineflix.repository.MovieRepository
 import com.example.cineflix.viewmodel.BrowseMoviesViewModel
 
 class BrowseMoviesActivity : AppCompatActivity() {

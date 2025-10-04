@@ -1,10 +1,11 @@
-package com.example.cineflix
+package com.example.cineflix.ui
 
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.cineflix.R
 import com.example.cineflix.adapters.MovieAdapter
 import com.example.cineflix.data.network.RetrofitClient
 import com.example.cineflix.model.Movie

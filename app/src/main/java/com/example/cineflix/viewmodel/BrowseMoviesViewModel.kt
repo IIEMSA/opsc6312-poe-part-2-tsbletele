@@ -2,7 +2,7 @@ package com.example.cineflix.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.cineflix.model.MovieRepository
+import com.example.cineflix.repository.MovieRepository
 import com.example.cineflix.model.Movie
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

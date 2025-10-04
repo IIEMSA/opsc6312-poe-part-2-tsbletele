@@ -1,12 +1,11 @@
-package com.example.cineflix
+package com.example.cineflix.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cineflix.R
-import com.example.cineflix.adapters.MovieAdapter
-import com.example.cineflix.model.ProfileViewModel
+import com.example.cineflix.viewmodel.ProfileViewModel
 
 class ProfileActivity : AppCompatActivity() {
 

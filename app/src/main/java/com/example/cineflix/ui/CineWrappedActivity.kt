@@ -1,11 +1,11 @@
-package com.example.cineflix
+package com.example.cineflix.ui
 
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.cineflix.R
-import com.example.cineflix.model.CineWrappedViewModel
+import com.example.cineflix.viewmodel.CineWrappedViewModel
 
 class CineWrappedActivity : AppCompatActivity() {
 

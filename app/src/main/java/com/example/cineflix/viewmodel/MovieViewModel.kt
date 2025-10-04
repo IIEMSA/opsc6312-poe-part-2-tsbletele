@@ -1,9 +1,11 @@
-package com.example.cineflix.model
+package com.example.cineflix.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.cineflix.model.Movie
+import com.example.cineflix.repository.MovieRepository
 import kotlinx.coroutines.launch
 
 class MovieViewModel(private val repo: MovieRepository) : ViewModel() {

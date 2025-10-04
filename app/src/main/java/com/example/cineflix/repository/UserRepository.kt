@@ -1,4 +1,7 @@
-package com.example.cineflix.model
+package com.example.cineflix.repository
+
+import com.example.cineflix.model.CineWrapped
+import com.example.cineflix.model.Movie
 
 class UserRepository {
     // TODO: Connect with Room or Firebase to store/retrieve user watch data

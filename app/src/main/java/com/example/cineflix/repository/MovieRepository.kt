@@ -1,4 +1,4 @@
-package com.example.cineflix.model
+package com.example.cineflix.repository
 
 import com.example.cineflix.data.network.RetrofitClient
 
