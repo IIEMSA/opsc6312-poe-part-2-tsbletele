@@ -42,6 +42,9 @@ class ProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         // Inflate the layout XML for the profile screen
         setContentView(R.layout.activity_profile)
+
+     // Load user-specific profile data (use real user ID when available)
+        viewModel.loadProfile("user123")
         
         // Initialize RecyclerViews and set their adapters
         initRecyclerViews()
