@@ -14,11 +14,11 @@ import kotlinx.coroutines.launch
 
 class ProfileActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: ProfileViewModel
+    private lateinit var viewModel: ProfileViewModel by viewModels ()
 
-    private lateinit var recyclerRecentlyWatched: RecyclerView
-    private lateinit var recyclerHighlyRated: RecyclerView
-    private lateinit var recyclerFollowing: RecyclerView
+    private lateinit var recentlyWatchedAdapter: MovieAdapter
+    private lateinit var highlyRatedAdapter: MovieAdapter
+    private lateinit var followingAdapter: MovieAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
