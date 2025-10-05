@@ -1,11 +1,16 @@
 package com.example.cineflix.ui
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cineflix.R
+import com.example.cineflix.adapters.MovieAdapter
 import com.example.cineflix.viewmodel.ProfileViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class ProfileActivity : AppCompatActivity() {
 
