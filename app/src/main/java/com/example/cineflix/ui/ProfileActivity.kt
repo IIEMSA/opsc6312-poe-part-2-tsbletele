@@ -96,5 +96,25 @@ class ProfileActivity : AppCompatActivity() {
     }
 }
 
-
+private fun setupBottomNavigation() {
+        val bottomNavigation = findViewById<BottomNavigationView>(R.id.bottomNavigation)
+        bottomNavigation.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.menu_home -> {
+                    // Navigate to HomeActivity (uncomment when needed)
+                    // startActivity(Intent(this, MainActivity::class.java))
+                    true
+                }
+                R.id.menu_browse -> {
+                    // Navigate to BrowseMoviesActivity (uncomment when needed)
+                    // startActivity(Intent(this, BrowseMoviesActivity::class.java))
+                    true
+                }
+                R.id.menu_profile -> {
+                    true // Already here
+                }
+                else -> false
+            }
+        }
+    }
 }
