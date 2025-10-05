@@ -69,4 +69,32 @@ class ProfileActivity : AppCompatActivity() {
         findViewById<RecyclerView>(R.id.recyclerFollowing).adapter = followingAdapter
     }
 
+  private fun observeViewModel() {
+    // Launch a coroutine tied to the Activity's lifecycle
+    lifecycleScope.launch {
+        // Collect the latest list of recently watched movies from the ViewModel
+        viewModel.recentlyWatched.collectLatest { movies ->
+            // Submit the updated list to the RecyclerView adapter to refresh the UI
+            recentlyWatchedAdapter.submitList(movies)
+        }
+    }
+
+    lifecycleScope.launch {
+        // Collect the latest list of highly rated movies from the ViewModel
+        viewModel.highlyRated.collectLatest { movies ->
+            // Update the highly rated movies adapter with new data
+            highlyRatedAdapter.submitList(movies)
+        }
+    }
+
+    lifecycleScope.launch {
+        // Collect the latest list of followed movies or content from the ViewModel
+        viewModel.following.collectLatest { movies ->
+            // Submit the new list to the following adapter to update the UI
+            followingAdapter.submitList(movies)
+        }
+    }
+}
+
+
 }
