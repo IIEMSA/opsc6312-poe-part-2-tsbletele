@@ -28,4 +28,14 @@ class ProfileActivity : AppCompatActivity() {
         observeViewModel()
         setupBottomNavigation()
     }
+
+    private fun initRecyclerViews() {
+        recentlyWatchedAdapter = MovieAdapter()
+        highlyRatedAdapter = MovieAdapter()
+        followingAdapter = MovieAdapter()
+
+        findViewById<RecyclerView>(R.id.recyclerRecentlyWatched).adapter = recentlyWatchedAdapter
+        findViewById<RecyclerView>(R.id.recyclerHighlyRated).adapter = highlyRatedAdapter
+        findViewById<RecyclerView>(R.id.recyclerFollowing).adapter = followingAdapter
+    }
 }
