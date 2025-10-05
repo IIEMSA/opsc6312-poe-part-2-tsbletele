@@ -13,4 +13,16 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
+class ProfileViewModel(
+    private val repository: UserRepository = UserRepository()
+) : ViewModel() {
 
+    // Backing property for recently watched movies
+    private val _recentlyWatched = MutableStateFlow<List<Movie>>(emptyList())
+    // Public immutable flow exposed to the UI
+    val recentlyWatched: StateFlow<List<Movie>> = _recentlyWatched
+
+    // Backing property for highly rated movies
+    private val _highlyRated = MutableStateFlow<List<Movie>>(emptyList())
+    // Public immutable flow exposed to the UI
+    val highlyRated: StateFlow<List<Movie>> = _highlyRated
