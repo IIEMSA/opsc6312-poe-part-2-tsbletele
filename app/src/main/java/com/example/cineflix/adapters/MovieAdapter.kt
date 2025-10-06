@@ -11,7 +11,7 @@ import com.example.cineflix.R
 import com.example.cineflix.model.Movie
 
 class MovieAdapter(
-    private val movies: List<Movie>
+    private var movies: List<Movie>
 ) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
     inner class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -56,4 +56,9 @@ class MovieAdapter(
     }
 
     override fun getItemCount() = movies.size
+
+    fun updateMovies(newMovies: List<Movie>) {
+        movies = newMovies
+        notifyDataSetChanged()
+    }
 }

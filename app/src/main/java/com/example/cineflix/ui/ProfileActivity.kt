@@ -1,6 +1,7 @@
 package com.example.cineflix.ui
 
 // Android framework imports
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
@@ -11,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 
 // Project-specific imports
 import com.example.cineflix.R
+import com.example.cineflix.adapters.FollowingAdapter
 import com.example.cineflix.adapters.MovieAdapter
 import com.example.cineflix.viewmodel.ProfileViewModel
 
@@ -22,26 +24,29 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 /**
- * ProfileActivity is the screen displaying user profile data including recently watched movies, 
- * highly rated movies, and followed content.
- * It sets up RecyclerViews with adapters, observes data from ProfileViewModel,
- * and manages the bottom navigation bar.
+ * ProfileActivity displays user profile data including:
+ * - Recently watched movies
+ * - Highly rated movies
+ * - Followed users' content
+ *
+ * It initializes RecyclerViews, observes data from ProfileViewModel,
+ * and manages bottom navigation.
  */
 class ProfileActivity : AppCompatActivity() {
 
-    // Get ViewModel scoped to this activity
+    // ViewModel instance (lifecycle-aware)
     private val viewModel: ProfileViewModel by viewModels()
 
-    // Adapters for different movie categories
+    // RecyclerView adapters
     private lateinit var recentlyWatchedAdapter: MovieAdapter
     private lateinit var highlyRatedAdapter: MovieAdapter
-    private lateinit var followingAdapter: MovieAdapter
+    private lateinit var followingAdapter: FollowingAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
 
-        // Load user profile data (replace with actual user ID when integrated)
+        // Load profile data (TODO: replace hardcoded userId with actual auth user)
         viewModel.loadProfile("user123")
 
         initRecyclerViews()
@@ -50,12 +55,12 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     /**
-     * Initializes the RecyclerViews and binds them to their corresponding adapters.
+     * Initializes RecyclerViews and attaches MovieAdapters.
      */
     private fun initRecyclerViews() {
-        recentlyWatchedAdapter = MovieAdapter()
-        highlyRatedAdapter = MovieAdapter()
-        followingAdapter = MovieAdapter()
+        recentlyWatchedAdapter = MovieAdapter(emptyList())
+        highlyRatedAdapter = MovieAdapter(emptyList())
+        followingAdapter = FollowingAdapter(emptyList())
 
         findViewById<RecyclerView>(R.id.recyclerRecentlyWatched).adapter = recentlyWatchedAdapter
         findViewById<RecyclerView>(R.id.recyclerHighlyRated).adapter = highlyRatedAdapter
@@ -63,46 +68,52 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     /**
-     * Observes StateFlows from the ViewModel and updates adapters with the latest data.
+     * Observes data flows from the ViewModel to update UI dynamically.
      */
     private fun observeViewModel() {
         lifecycleScope.launch {
             viewModel.recentlyWatched.collectLatest { movies ->
-                recentlyWatchedAdapter.submitList(movies)
+                recentlyWatchedAdapter.updateMovies(movies)
             }
         }
 
         lifecycleScope.launch {
             viewModel.highlyRated.collectLatest { movies ->
-                highlyRatedAdapter.submitList(movies)
+                highlyRatedAdapter.updateMovies(movies)
             }
         }
 
         lifecycleScope.launch {
-            viewModel.following.collectLatest { movies ->
-                followingAdapter.submitList(movies)
+            viewModel.following.collectLatest { usernames ->
+                followingAdapter.updateFollowing(usernames)
             }
         }
     }
 
+
     /**
-     * Sets up the bottom navigation and handles navigation item selection.
+     * Handles bottom navigation actions.
      */
     private fun setupBottomNavigation() {
         val bottomNavigation = findViewById<BottomNavigationView>(R.id.bottomNavigation)
         bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.menu_home -> {
-                    // startActivity(Intent(this, MainActivity::class.java))
+                R.id.nav_home -> {
+                    // TODO: Enable when MainActivity is ready
+                    startActivity(Intent(this, MainActivity::class.java))
                     true
                 }
-                R.id.menu_browse -> {
-                    // startActivity(Intent(this, BrowseMoviesActivity::class.java))
+                R.id.nav_browse -> {
+                    // TODO: Enable when BrowseMoviesActivity is ready
+                    startActivity(Intent(this, BrowseMoviesActivity::class.java))
                     true
                 }
-                R.id.menu_profile -> {
-                    true // Already on this page
+                R.id.nav_mixes -> {
+                    // TODO: Enable when BrowseMoviesActivity is ready
+                    startActivity(Intent(this, BrowseMoviesActivity::class.java))
+                    true
                 }
+                R.id.nav_profile -> true
                 else -> false
             }
         }
