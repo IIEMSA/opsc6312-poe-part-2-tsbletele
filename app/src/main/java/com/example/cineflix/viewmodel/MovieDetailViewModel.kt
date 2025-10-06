@@ -1,28 +1,36 @@
 package com.example.cineflix
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.example.cineflix.model.Movie
-import com.example.cineflix.model.MovieDetail
-import com.example.cineflix.repository.MovieRepository
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
 
-class MovieDetailViewModel(
-    private val repository: MovieRepository
-) : ViewModel() {
+data class Movie(
+    val id: Int,
+    val title: String,
+    val overview: String,
+    val genres: List<String>,
+    val similarTitles: List<String>
+)
 
-    private val _movieDetail = MutableStateFlow<MovieDetail?>(null)
-    val movieDetail: StateFlow<MovieDetail?> = _movieDetail
+class MovieDetailViewModel : ViewModel() {
 
-    private val _similarMovies = MutableStateFlow<List<Movie>>(emptyList())
-    val similarMovies: StateFlow<List<Movie>> = _similarMovies
+    private val _movie = MutableLiveData<Movie>()
+    val movie: LiveData<Movie> get() = _movie
 
-    fun loadMovieDetails(movieId: Int) {
-        viewModelScope.launch {
-            // TODO: Call repository.getMovieDetails(movieId)
-            // TODO: Call repository.getSimilarMovies(movieId)
-        }
+    fun loadMovieDetails(id: Int) {
+        // Mock data for demonstration — you’ll replace this with a real data source later
+        val demoMovie = Movie(
+            id = id,
+            title = "Spider-Man: Across the Spider-Verse",
+            overview = "After reuniting with Gwen Stacy, Miles Morales embarks on an adventure...",
+            genres = listOf("Animation", "Action", "Adventure"),
+            similarTitles = listOf(
+                "Into the Spider-Verse",
+                "No Way Home",
+                "Homecoming",
+                "Far From Home"
+            )
+        )
+        _movie.value = demoMovie
     }
 }
