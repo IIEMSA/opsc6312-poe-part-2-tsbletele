@@ -1,30 +1,35 @@
 package com.example.cineflix
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cineflix.R
-import com.example.cineflix.model.Movie
 
 class MovieDetailAdapter(
-    private var movies: List<Movie>
-) : RecyclerView.Adapter<MovieDetailAdapter.MovieViewHolder>() {
+    private var items: List<String> = listOf()
+) : RecyclerView.Adapter<MovieDetailAdapter.ViewHolder>() {
 
-    inner class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        // TODO: Bind poster, title
+    inner class ViewHolder(parent: ViewGroup) :
+        RecyclerView.ViewHolder(
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.simple_text_item, parent, false)
+        ) {
+        val text: TextView = itemView.findViewById(R.id.simpleText)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_movie_cards, parent, false)
-        return MovieViewHolder(view)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        return ViewHolder(parent)
     }
 
-    override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        val movie = movies[position]
-        // TODO: Bind data (use Glide for poster)
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.text.text = items[position]
     }
 
-    override fun getItemCount(): Int = movies.size
+    override fun getItemCount(): Int = items.size
+
+    fun updateList(newList: List<String>) {
+        items = newList
+        notifyDataSetChanged()
+    }
 }
