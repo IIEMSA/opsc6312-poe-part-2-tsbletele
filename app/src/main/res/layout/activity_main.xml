@@ -7,13 +7,6 @@
     android:background="@color/light_blue_bg"
     android:padding="16dp">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewMovies"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:scrollbars="vertical"/>
-
     <!-- Search Bar with Logo -->
     <LinearLayout
         android:orientation="horizontal"
@@ -37,7 +30,7 @@
 
         <EditText
             android:id="@+id/searchBar"
-            android:layout_width="50dp"
+            android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
             android:hint="Search movies or series..."
@@ -159,6 +152,5 @@
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        app:menu="@drawable/bottom_nav_menu"/>
+        app:menu="@drawable/bottom_nav_menu" />
 </LinearLayout>

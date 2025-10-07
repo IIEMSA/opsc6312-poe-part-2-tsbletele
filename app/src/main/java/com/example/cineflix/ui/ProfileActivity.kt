@@ -110,7 +110,7 @@ class ProfileActivity : AppCompatActivity() {
                 }
                 R.id.nav_mixes -> {
                     // TODO: Enable when BrowseMoviesActivity is ready
-                    startActivity(Intent(this, BrowseMoviesActivity::class.java))
+                    //startActivity(Intent(this, BrowseMoviesActivity::class.java))
                     true
                 }
                 R.id.nav_profile -> true

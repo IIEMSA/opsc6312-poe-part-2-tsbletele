@@ -40,6 +40,16 @@
             android:ellipsize="end"
             android:maxLines="2" />
 
+        <!-- Movie Rating -->
+        <TextView
+            android:id="@+id/textRating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="⭐ 7.8/10"
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp"
+            android:layout_marginTop="4dp" />
+
         <!-- Rating -->
         <LinearLayout
             android:id="@+id/movieRating"

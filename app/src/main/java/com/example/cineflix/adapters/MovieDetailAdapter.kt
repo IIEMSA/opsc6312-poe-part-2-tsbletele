@@ -35,7 +35,7 @@ class MovieDetailAdapter(
         holder.title.text = movie.title
 
         Glide.with(holder.itemView.context)
-            .load("https://image.tmdb.org/t/p/w500${movie.poster_path}")
+            .load("https://image.tmdb.org/t/p/w500${movie.posterPath}")
             .placeholder(R.drawable.spiderverse_poster)
             .into(holder.poster)
 

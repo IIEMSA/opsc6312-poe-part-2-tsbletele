@@ -1,74 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/light_blue_bg"
+    android:padding="16dp">
 
-    <!-- AppBar with Search -->
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/appBar"
-        android:layout_width="match_parent"
+    <!-- Header -->
+    <TextView
+        android:id="@+id/tvBrowseTitle"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:elevation="4dp"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+        android:text="Browse Movies"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="12dp" />
 
-        <androidx.appcompat.widget.SearchView
-            android:id="@+id/searchView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:queryHint="Search movies..." />
-    </androidx.appcompat.widget.Toolbar>
-
-    <!-- Filter and Sort Options -->
+    <!-- Search Bar -->
     <LinearLayout
-        android:id="@+id/filterSortLayout"
+        android:id="@+id/searchContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="8dp"
-        android:gravity="start|center_vertical">
+        android:background="@drawable/search_background"
+        android:padding="6dp"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="12dp">
 
-        <Spinner
-            android:id="@+id/genreSpinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:entries="@array/genres" />
+        <EditText
+            android:id="@+id/searchInput"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:hint="Search for a movie..."
+            android:background="@android:color/transparent"
+            android:paddingStart="8dp"
+            android:imeOptions="actionSearch"
+            android:singleLine="true" />
 
-        <Spinner
-            android:id="@+id/yearSpinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:entries="@array/years" />
+        <ImageButton
+            android:id="@+id/searchButton"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:background="@drawable/circle_button"
+            android:src="@drawable/ic_browse"
+            android:contentDescription="Search" />
 
-        <Spinner
-            android:id="@+id/ratingSpinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:entries="@array/ratings" />
+        <ImageButton
+            android:id="@+id/voiceButton"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="6dp"
+            android:background="@drawable/circle_button"
+            android:src="@drawable/ic_mic"
+            android:contentDescription="Voice Search" />
     </LinearLayout>
 
-    <!-- Movies Grid/List -->
+    <!-- Filter Row -->
+    <LinearLayout
+        android:id="@+id/filterRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="12dp">
+
+        <Spinner
+            android:id="@+id/spinnerGenre"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:spinnerMode="dropdown"
+            android:entries="@array/genres_array" />
+
+        <Spinner
+            android:id="@+id/spinnerSort"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:spinnerMode="dropdown"
+            android:entries="@array/sort_options" />
+    </LinearLayout>
+
+    <!-- Movie List -->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/moviesRecyclerView"
+        android:id="@+id/recyclerBrowse"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
         android:layout_weight="1"
-        android:scrollbars="vertical"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:spanCount="2" />
+        android:overScrollMode="never" />
 
-    <!-- Pagination Loader -->
+    <!-- Progress Bar -->
     <ProgressBar
-        android:id="@+id/paginationLoader"
+        android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:visibility="gone" />
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:indeterminate="true" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <!-- Empty/Error Message -->
+    <TextView
+        android:id="@+id/tvEmpty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No movies found"
+        android:textSize="16sp"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        android:padding="8dp"
+        android:textColor="@android:color/darker_gray" />
+
+</LinearLayout>

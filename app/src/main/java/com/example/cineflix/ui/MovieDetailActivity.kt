@@ -6,100 +6,105 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.cineflix.adapters.MovieDetailAdapter
+import com.bumptech.glide.Glide
 import com.example.cineflix.R
 import com.example.cineflix.adapters.MovieAdapter
-import com.example.cineflix.viewmodel.MovieDetailViewModel
+import com.example.cineflix.data.network.RetrofitClient
+import com.example.cineflix.model.Movie
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MovieDetailActivity : AppCompatActivity() {
 
-    private val viewModel: MovieDetailViewModel by viewModels()
-    private lateinit var adapter: MovieDetailAdapter
-    private lateinit var similarMoviesAdapter: MovieAdapter
+    private lateinit var posterImage: ImageView
+    private lateinit var movieTitle: TextView
+    private lateinit var movieOverview: TextView
+    private lateinit var genreChips: ChipGroup
     private lateinit var recyclerMoreLikeThis: RecyclerView
+    private lateinit var backButton: ImageButton
+    private lateinit var shareButton: ImageButton
 
+    private val apiKey = "83258d157014d8e69ded25cc93f1e565"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_detail)
 
-        // Views
-        val movieTitle = findViewById<TextView>(R.id.movieTitle)
-        val movieOverview = findViewById<TextView>(R.id.movieOverview)
-        val genreChips = findViewById<ChipGroup>(R.id.genreChips)
-        val recyclerMore = findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.recyclerMoreLikeThis)
-        val backButton = findViewById<ImageButton>(R.id.backButton)
-        val shareButton = findViewById<ImageButton>(R.id.shareButton)
+        // Initialize views
+        posterImage = findViewById(R.id.posterImage)
+        movieTitle = findViewById(R.id.movieTitle)
+        movieOverview = findViewById(R.id.movieOverview)
+        genreChips = findViewById(R.id.genreChips)
+        recyclerMoreLikeThis = findViewById(R.id.recyclerMoreLikeThis)
+        backButton = findViewById(R.id.backButton)
+        shareButton = findViewById(R.id.shareButton)
 
-        // Recycler setup
-        adapter = MovieDetailAdapter()
-        recyclerMore.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        recyclerMore.adapter = adapter
+        // Get data from intent
+        val movieId = intent.getIntExtra("movieId", -1)
+        val title = intent.getStringExtra("title")
+        val overview = intent.getStringExtra("overview")
+        val posterPath = intent.getStringExtra("posterPath")
+        val genres = intent.getStringArrayListExtra("genres") ?: arrayListOf()
 
-        // Observe LiveData
-        viewModel.movie.observe(this) { movie ->
-            movieTitle.text = movie.title
-            movieOverview.text = movie.overview
+        // Bind basic data
+        movieTitle.text = title
+        movieOverview.text = overview
 
-            // Genre chips
-            genreChips.removeAllViews()
-            movie.genres?.forEach { genre ->
-                val chip = Chip(this)
-                chip.text = genre.name
-                chip.isClickable = false
-                chip.isCheckable = false
-                genreChips.addView(chip)
-            }
+        Glide.with(this)
+            .load("https://image.tmdb.org/t/p/w500$posterPath")
+            .placeholder(R.drawable.yellowjackets)
+            .into(posterImage)
 
-            // Update "More like this"
-            viewModel.loadSimilarMovies(movie.id) // Trigger a network call for similar movies
-
+        // Display genre chips
+        for (genre in genres) {
+            val chip = Chip(this)
+            chip.text = genre
+            chip.isClickable = false
+            chip.isCheckable = false
+            genreChips.addView(chip)
         }
 
-        // Simulate data load (you can replace this with real movie ID)
-        viewModel.loadMovieDetails(1)
+        // Handle back button
+        backButton.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
 
-        // --- Observe similar movies list ---
-        viewModel.similarMovies.observe(this, Observer { similarList ->
-            similarMoviesAdapter = MovieAdapter(similarList)
-            recyclerMoreLikeThis.adapter = similarMoviesAdapter
-        })
-
-        // Back button
-        backButton.setOnClickListener { finish() }
-
-        // Share button
+        // Handle share button
         shareButton.setOnClickListener {
-            val shareIntent = Intent(Intent.ACTION_SEND)
-            shareIntent.type = "text/plain"
-            shareIntent.putExtra(Intent.EXTRA_TEXT, "Check out ${movieTitle.text} on CineFlix!")
+            val shareIntent = Intent(Intent.ACTION_SEND).apply {
+                type = "text/plain"
+                putExtra(Intent.EXTRA_SUBJECT, "Check out this movie!")
+                putExtra(Intent.EXTRA_TEXT, "$title\n\n$overview")
+            }
             startActivity(Intent.createChooser(shareIntent, "Share via"))
         }
 
-        // Example of rating click handling
-        setupUserRating()
+        // Load similar movies
+        if (movieId != -1) {
+            fetchSimilarMovies(movieId)
+        } else {
+            Toast.makeText(this, "Movie not found", Toast.LENGTH_SHORT).show()
+        }
     }
 
-    /** Handles interactive star rating by the user */
-    private fun setupUserRating() {
-        val starIds = listOf(R.id.star1, R.id.star2, R.id.star3, R.id.star4, R.id.star5)
-        val stars = starIds.map { findViewById<ImageButton>(it) }
-
-        for (i in stars.indices) {
-            stars[i].setOnClickListener {
-                for (j in stars.indices) {
-                    val drawable =
-                        if (j <= i) R.drawable.star_filled else R.drawable.star_outline
-                    stars[j].setImageResource(drawable)
+    private fun fetchSimilarMovies(movieId: Int) {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val response = RetrofitClient.api.getSimilarMovies(movieId, apiKey)
+                withContext(Dispatchers.Main) {
+                    recyclerMoreLikeThis.layoutManager =
+                        LinearLayoutManager(this@MovieDetailActivity, LinearLayoutManager.HORIZONTAL, false)
+                    recyclerMoreLikeThis.adapter = MovieAdapter(response.results)
                 }
-                Toast.makeText(this, "You rated ${i + 1} stars!", Toast.LENGTH_SHORT).show()
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(this@MovieDetailActivity, "Failed to load similar movies", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }

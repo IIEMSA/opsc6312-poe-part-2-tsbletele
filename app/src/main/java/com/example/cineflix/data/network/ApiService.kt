@@ -16,6 +16,9 @@ interface ApiService {
         @Query("page") page: Int = 1
     ): MovieResponse
 
+    @GET("trending/movie/week")
+    suspend fun getTrending(@Query("api_key") apiKey: String): MovieResponse
+
     // Popular movies
     @GET("movie/popular")
     suspend fun getPopularMovies(
