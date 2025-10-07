@@ -8,8 +8,12 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.cineflix.adapters.MovieDetailAdapter
 import com.example.cineflix.R
+import com.example.cineflix.adapters.MovieAdapter
 import com.example.cineflix.viewmodel.MovieDetailViewModel
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
@@ -18,6 +22,9 @@ class MovieDetailActivity : AppCompatActivity() {
 
     private val viewModel: MovieDetailViewModel by viewModels()
     private lateinit var adapter: MovieDetailAdapter
+    private lateinit var similarMoviesAdapter: MovieAdapter
+    private lateinit var recyclerMoreLikeThis: RecyclerView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,20 +50,27 @@ class MovieDetailActivity : AppCompatActivity() {
 
             // Genre chips
             genreChips.removeAllViews()
-            movie.genres.forEach { genre ->
+            movie.genres?.forEach { genre ->
                 val chip = Chip(this)
-                chip.text = genre
+                chip.text = genre.name
                 chip.isClickable = false
                 chip.isCheckable = false
                 genreChips.addView(chip)
             }
 
             // Update "More like this"
-            adapter.updateList(movie.similarTitles)
+            viewModel.loadSimilarMovies(movie.id) // Trigger a network call for similar movies
+
         }
 
         // Simulate data load (you can replace this with real movie ID)
         viewModel.loadMovieDetails(1)
+
+        // --- Observe similar movies list ---
+        viewModel.similarMovies.observe(this, Observer { similarList ->
+            similarMoviesAdapter = MovieAdapter(similarList)
+            recyclerMoreLikeThis.adapter = similarMoviesAdapter
+        })
 
         // Back button
         backButton.setOnClickListener { finish() }

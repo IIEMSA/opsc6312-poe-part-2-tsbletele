@@ -6,5 +6,7 @@ data class Movie(
     val overview: String,
     val release_date: String,
     val poster_path: String?,
-    val rating: Double
+    val rating: Double,
+    val genres: List<String>,
+    val similarTitles: List<String>
 )

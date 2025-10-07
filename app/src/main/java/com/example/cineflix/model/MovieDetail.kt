@@ -4,8 +4,10 @@ data class MovieDetail(
     val id: Int,
     val title: String,
     val overview: String,
-    val genres: List<Genre>,
     val poster_path: String?,
-    val vote_average: Double
+    val vote_average: Double,
+    val release_date: String?,
+    val genres: List<Genre>?,
+    val runtime: Int?
 )
 
